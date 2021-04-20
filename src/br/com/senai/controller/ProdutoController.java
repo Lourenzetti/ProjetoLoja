@@ -46,6 +46,7 @@ public class ProdutoController {
 	
 	public void consultarProdutos(List<ProdutoModel> produtos) {
 		System.out.println("--- PRODUTOS CADASTRADOS ---");
+		System.out.printf("| %10s | 8%s | %4s | %9s |\n", "Produto", "Preço", "Quantidade", "Valor Total");
 		for (ProdutoModel produtoModel : produtos) {
 			System.out.println(produtoModel);
 		}
