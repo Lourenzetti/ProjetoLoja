@@ -36,7 +36,7 @@ public class ProdutoModel {
 		this.precoDoProduto = precoDoProduto;
 	}
 
-	public int getQuantidadedeProduto() {
+	public int getQuantidadeDeProduto() {
 		return quantidadedeProduto;
 	}
 
@@ -51,14 +51,5 @@ public class ProdutoModel {
 	public void setSaldoEmEstoque(double saldoEmEstoque) {
 		this.saldoEmEstoque = saldoEmEstoque;
 	}
-
-	@Override
-	public String toString() {
-		return "Produto: "+ nomeDoProduto + "\nPreco: R$" + precoDoProduto + "\nQuantidade: " + quantidadedeProduto + "\nSaldo em estoque: R$" + saldoEmEstoque + "\n";
-	}
-	
-	
-	
-	
 
 }

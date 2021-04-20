@@ -28,9 +28,13 @@ public class ProgramaPrincipal {
 				break;
 				
 			case 2:
-				lojaController.consultarProdutos(produtos);
+				lojaController.listarProdutos(produtos);
 				break;
 
+			case 3:
+				lojaController.editarProduto(produtos);
+				break;
+				
 			case 9:
 				sair = true;
 				break;
