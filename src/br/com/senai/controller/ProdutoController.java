@@ -18,15 +18,24 @@ public class ProdutoController {
 		return scanner.nextInt();
 	}
 
-	public void menu() {
+	public void menu(List<ProdutoModel> carrinho) {
+		
+		System.out.println("\n--- CARRINHO ---\n");
+		
+		listarProdutos(carrinho);
+		
 		System.out.println("\n--- MENU ---\n");
 		System.out.println("1) Cadastrar itens");
 		System.out.println("2) Listar estoque");
 		System.out.println("3) Editar item");
 		System.out.println("4) Remover item ");
-		System.out.println("5) Realizar item");
+		System.out.println("5) Adicionar ao carrinho");
+		System.out.println("6) Remover unidades do carrinho");
+		System.out.println("7) Remover item do carrinho");
+		System.out.println("8) Confirmar compra");
 		System.out.println("9) Encerrar");
-
+		
+	
 	}
 
 	public ProdutoModel cadastrarProduto() {
@@ -38,20 +47,21 @@ public class ProdutoController {
 		System.out.print("Preço: ");
 		ProdutoModel.setPrecoDoProduto(scanner.nextDouble());
 		System.out.print("Quantidade: ");
-		ProdutoModel.setQuantidadedeProduto(scanner.nextInt());
+		ProdutoModel.setQuantidadeDeProduto(scanner.nextInt());
 		ProdutoModel.setSaldoEmEstoque(ProdutoModel.getQuantidadeDeProduto() * ProdutoModel.getPrecoDoProduto());
 
 		return ProdutoModel;
 	}
 
 	public List<ProdutoModel> listarProdutos(List<ProdutoModel> produtos) {
-		System.out.println("--- PRODUTOS CADASTRADOS ---");
-		System.out.printf("| %10s | %8s | %4s | %9s |\n", "Produto", "Preço", "Qtd", "R$ Total");
+		System.out.println("-------------------------------------------------");
+		System.out.printf("| %2s | %10s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
 
-		produtos.forEach(produto -> {
-			System.out.printf("| %10s | %8s | %4s | %9s |\n", produto.getNomeDoProduto(), produto.getPrecoDoProduto(),
-					produto.getQuantidadeDeProduto(), produto.getSaldoEmEstoque());
-		});
+		for (int i = 0; i < produtos.size(); i++) {
+			System.out.printf("| %2s | %10s | %8s | %4s | %9s |\n", i + 1, produtos.get(i).getNomeDoProduto(),
+					produtos.get(i).getPrecoDoProduto(), produtos.get(i).getQuantidadeDeProduto(),
+					produtos.get(i).getSaldoEmEstoque());
+		}
 
 		return produtos;
 	}
@@ -60,9 +70,21 @@ public class ProdutoController {
 		ProdutoModel produto = new ProdutoModel();
 		int idDoProduto, indexDoCampo;
 
-		System.out.println("--- EDOTAR DADOS DE PRODUTO ---");
+		if (produtos.size() <= 0) {
+			System.out.println("Lista de produtos vazia.");
+			return null;
+		}
+
+		listarProdutos(produtos);
+
+		System.out.println("--- EDITAR DADOS DE PRODUTO ---");
 		System.out.print("Informe o ID do produto: ");
-		idDoProduto = scanner.nextInt();
+		idDoProduto = scanner.nextInt() - 1;
+
+		if (idDoProduto > produtos.size()) {
+			System.out.println("ID inválido.");
+			return null;
+		}
 
 		System.out.println("--- CAMPOS ---");
 		System.out.println("1) Nome do produto");
@@ -77,15 +99,101 @@ public class ProdutoController {
 			produto.setNomeDoProduto(scanner.next());
 
 			produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
-			produto.setQuantidadedeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto());
+			produto.setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto());
 			produto.setSaldoEmEstoque(produtos.get(idDoProduto).getSaldoEmEstoque());
 
 			produtos.set(idDoProduto, produto);
 
 			break;
 
+		case 2:
+			System.out.print("Informe o novo preço para o produto: ");
+			produto.setPrecoDoProduto(scanner.nextDouble());
+
+			produto.setNomeDoProduto(produtos.get(idDoProduto).getNomeDoProduto());
+			produto.setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto());
+			produto.setSaldoEmEstoque(produtos.get(idDoProduto).getQuantidadeDeProduto() * produto.getPrecoDoProduto());
+
+			produtos.set(idDoProduto, produto);
+			break;
+
+		case 3:
+			System.out.print("Informe a nova quantidade para o produto: ");
+			produto.setQuantidadeDeProduto(scanner.nextInt());
+
+			produto.setNomeDoProduto(produtos.get(idDoProduto).getNomeDoProduto());
+			produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
+			produto.setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produto.getQuantidadeDeProduto());
+
+			produtos.set(idDoProduto, produto);
+			break;
+
+		default:
+			System.out.println("Opção inválida");
+			break;
 		}
 
+		return produto;
+	}
+
+	public void removerProduto(List<ProdutoModel> produtos) {
+
+		listarProdutos(produtos);
+
+		if (produtos.size() <= 0) {
+			System.out.println("Lista de produtos vazia.");
+			return;
+		}
+
+		System.out.println("--- REMOVER PRODUTO ---");
+
+		System.out.print("Informe o ID do produto: ");
+		int idDoProduto = scanner.nextInt();
+
+		if (idDoProduto > produtos.size()) {
+			System.out.println("ID inválido.");
+			return;
+		}
+
+		produtos.remove(idDoProduto - 1);
+
+	}
+
+	public ProdutoModel adicionarAoCarrinho(List<ProdutoModel> produtos, List<ProdutoModel> carrinho) {
+
+		ProdutoModel produto = new ProdutoModel();
+		int idDoProduto, quantidade;
+		
+		System.out.println(" --- PRODUTOS DISPONÍVEIS ---");
+		listarProdutos(produtos);
+		
+		System.out.println(" --- CARRINHO ---");
+		listarProdutos(carrinho);
+
+		if (produtos.size() <= 0) {
+			System.out.println("Lista de produtos vazia.");
+			return null;
+		}
+
+		System.out.print("Informe o ID do produto: ");
+		idDoProduto = scanner.nextInt() - 1;
+
+		if (idDoProduto > produtos.size()) {
+			System.out.println("ID inválido.");
+			return null;
+		}
+
+		produto.setNomeDoProduto(produtos.get(idDoProduto).getNomeDoProduto());
+		
+		System.out.print("Quantidade: ");
+		quantidade = scanner.nextInt();
+		produto.setQuantidadeDeProduto(quantidade);
+		produto.setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produto.getQuantidadeDeProduto());
+		produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
+		produtos.get(idDoProduto).setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto() - quantidade);
+		produtos.get(idDoProduto).setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produtos.get(idDoProduto).getQuantidadeDeProduto());
+		
+		System.out.println("\n Produto adicionado ao carrinho.");
 		return produto;
 	}
 

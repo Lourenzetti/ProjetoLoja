@@ -6,11 +6,11 @@ public class ProdutoModel {
 	private double precoDoProduto;
 	private int quantidadedeProduto;
 	private double saldoEmEstoque;
-	
+
 	public ProdutoModel() {
-		
+
 	}
-	
+
 	public ProdutoModel(String nomeDoProduto, double precoDoProduto, int quantidadedeProduto, double saldoEmEstoque) {
 		super();
 		this.nomeDoProduto = nomeDoProduto;
@@ -40,7 +40,7 @@ public class ProdutoModel {
 		return quantidadedeProduto;
 	}
 
-	public void setQuantidadedeProduto(int quantidadedeProduto) {
+	public void setQuantidadeDeProduto(int quantidadedeProduto) {
 		this.quantidadedeProduto = quantidadedeProduto;
 	}
 
