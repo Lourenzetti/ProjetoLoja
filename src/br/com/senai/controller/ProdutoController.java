@@ -1,5 +1,6 @@
 package br.com.senai.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,9 +31,9 @@ public class ProdutoController {
 		System.out.println("3) Editar item");
 		System.out.println("4) Remover item ");
 		System.out.println("5) Adicionar ao carrinho");
-		System.out.println("6) Remover unidades do carrinho");
-		System.out.println("7) Remover item do carrinho");
-		System.out.println("8) Confirmar compra");
+		System.out.println("6) Remover item do carrinho");
+		System.out.println("7) Confirmar compra");
+		System.out.println("8) Esvaziar carrinho");
 		System.out.println("9) Encerrar");
 		
 	
@@ -190,11 +191,49 @@ public class ProdutoController {
 		produto.setQuantidadeDeProduto(quantidade);
 		produto.setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produto.getQuantidadeDeProduto());
 		produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
+		if(produtos.get(idDoProduto).getQuantidadeDeProduto() - quantidade < 0) {
+			System.out.println("Quantidade inválida.");
+			return null;
+		}else {
 		produtos.get(idDoProduto).setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto() - quantidade);
 		produtos.get(idDoProduto).setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produtos.get(idDoProduto).getQuantidadeDeProduto());
 		
 		System.out.println("\n Produto adicionado ao carrinho.");
+		}
 		return produto;
 	}
 
+	public ProdutoModel removerDoCarrinho(List<ProdutoModel> produtos, List<ProdutoModel> carrinho) {
+		
+		ProdutoModel produto = new ProdutoModel();
+		int idDoProduto, quantidade;
+		
+		System.out.println(" --- CARRINHO ---");
+		listarProdutos(carrinho);
+
+		System.out.print("Informe o ID do produto: ");
+		idDoProduto = scanner.nextInt() - 1;
+
+		if (idDoProduto > produtos.size()) {
+			System.out.println("ID inválido.");
+			return null;
+		}
+		
+		quantidade = produto.getQuantidadeDeProduto();
+		
+		produtos.get(idDoProduto).setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto() + quantidade);
+		produtos.get(idDoProduto).setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produtos.get(idDoProduto).getQuantidadeDeProduto());
+		
+		return null;
+	}
+	
+//	public int obterProduto(List<ProdutoModel> produtos) {
+//		
+//		for(int i = 0; i < produtos.size(); i++) {
+//			produtos.get(i).get
+//		}
+//		
+//		return -1;
+//	}
+	
 }
