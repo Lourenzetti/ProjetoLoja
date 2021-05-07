@@ -1,25 +1,26 @@
 package br.com.senai.model;
 
 public class ProdutoModel {
-	// ATRIBUTOS
+
+	// Atributos
 	private String nomeDoProduto;
 	private double precoDoProduto;
-	private int quantidadedeProduto;
+	private int quantidadeDeProduto;
 	private double saldoEmEstoque;
 
+	// CONSTRUCTORS
 	public ProdutoModel() {
-
 	}
 
-	public ProdutoModel(String nomeDoProduto, double precoDoProduto, int quantidadedeProduto, double saldoEmEstoque) {
+	public ProdutoModel(String nomeDoProduto, double precoDoProduto, int quantidadeDeProduto, double saldoEmEstoque) {
 		super();
 		this.nomeDoProduto = nomeDoProduto;
 		this.precoDoProduto = precoDoProduto;
-		this.quantidadedeProduto = quantidadedeProduto;
+		this.quantidadeDeProduto = quantidadeDeProduto;
 		this.saldoEmEstoque = saldoEmEstoque;
 	}
 
-	// METODOS PADRAO
+	// METODOS ACE/MOD
 	public String getNomeDoProduto() {
 		return nomeDoProduto;
 	}
@@ -37,11 +38,11 @@ public class ProdutoModel {
 	}
 
 	public int getQuantidadeDeProduto() {
-		return quantidadedeProduto;
+		return quantidadeDeProduto;
 	}
 
-	public void setQuantidadeDeProduto(int quantidadedeProduto) {
-		this.quantidadedeProduto = quantidadedeProduto;
+	public void setQuantidadeDeProduto(int quantidadeDeProduto) {
+		this.quantidadeDeProduto = quantidadeDeProduto;
 	}
 
 	public double getSaldoEmEstoque() {

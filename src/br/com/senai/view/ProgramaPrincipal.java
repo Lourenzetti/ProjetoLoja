@@ -1,48 +1,44 @@
 package br.com.senai.view;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.senai.controller.ProdutoController;
+import br.com.senai.model.CarrinhoModel;
 import br.com.senai.model.ProdutoModel;
 
 public class ProgramaPrincipal {
-
 	public static void main(String[] args) {
-
 		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
-		List<ProdutoModel> carrinho = new ArrayList<ProdutoModel>();
+		List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
 
-		// Objeto Controller do sistema
-		ProdutoController lojaController = new ProdutoController();
-		ProdutoController carrinhoController = new ProdutoController();
+		ProdutoController produtoController = new ProdutoController();
 
-		// Controle do loop de saida
 		boolean sair = false;
 
 		do {
-			lojaController.menu(carrinho);
-			int opcao = lojaController.opcao();
+			produtoController.menu(itensNoCarrinho);
+			int opc = produtoController.opcao();
 
-			switch (opcao) {
+			switch (opc) {
 			case 1:
-				produtos.add(lojaController.cadastrarProduto());
+				produtos.add(produtoController.cadastrarProduto());
 				break;
-
 			case 2:
-				lojaController.listarProdutos(produtos);
+				produtoController.listarProdutos(produtos);
 				break;
-
 			case 3:
-				lojaController.editarProduto(produtos);
+				produtoController.editarProduto(produtos);
+				break;
+			case 4:
+				produtoController.removerProduto(produtos);
+				break;
+			case 5:
+				itensNoCarrinho.add(produtoController.cadastrarItemNoCarrinho(produtos));
 				break;
 				
-			case 4:
-				lojaController.removerProduto(produtos);
-				break;
-			
-			case 5:
-				carrinho.add(carrinhoController.adicionarAoCarrinho(produtos, carrinho));
+			case 6:
+				produtoController.listarItensNoCarrinho(itensNoCarrinho);
 				break;
 				
 			case 9:
@@ -50,12 +46,11 @@ public class ProgramaPrincipal {
 				break;
 
 			default:
-				System.out.println("Opção Invalida!!!");
+				System.out.println("Opção inválida!!!");
 				break;
 			}
-
 		} while (!sair);
-		System.out.println();
-	}
 
+		System.out.println("Sistema encerrado!!!");
+	}
 }
