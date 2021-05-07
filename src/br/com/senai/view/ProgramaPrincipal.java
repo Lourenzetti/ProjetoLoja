@@ -16,6 +16,8 @@ public class ProgramaPrincipal {
 
 		boolean sair = false;
 
+		String cliente = produtoController.definirCliente();
+		
 		do {
 			produtoController.menu(itensNoCarrinho);
 			int opc = produtoController.opcao();
@@ -39,6 +41,10 @@ public class ProgramaPrincipal {
 				
 			case 6:
 				produtoController.listarItensNoCarrinho(itensNoCarrinho);
+				break;
+				
+			case 7:
+				produtoController.gerarCupom(itensNoCarrinho, cliente);
 				break;
 				
 			case 9:

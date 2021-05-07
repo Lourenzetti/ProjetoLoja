@@ -19,8 +19,16 @@ public class ProdutoController {
 		return entrada.nextInt();
 	}
 	
+	public String definirCliente() {
+		
+		System.out.println("Informe o nome do Cliente: ");
+		String nome = entrada.nextLine();
+		return nome;
+	}
+	
 	public void menu(List<CarrinhoModel> itensNoCarrinho) {
 		
+		System.out.println("\n");
 		listarItensNoCarrinho(itensNoCarrinho);
 		
 		System.out.println("\n--- MENU ---\n");
@@ -30,10 +38,16 @@ public class ProdutoController {
 		System.out.println("4) Remover item");
 		System.out.println("5) Adicionar ao carrinho");  
 		System.out.println("6) Listar carrinho");
+		System.out.println("7) Gerar cupom fiscal");
 		System.out.println("9) Sair do sistema");
 		System.out.println("--------------------");
 	}
 
+	public void gerarCupom(List<CarrinhoModel> itensNoCarrinho, String cliente) {
+		listarItensNoCarrinho(itensNoCarrinho);
+		System.out.println("Cliente: " + cliente);
+	}
+	
 	public CarrinhoModel cadastrarItemNoCarrinho(List<ProdutoModel> produtos) {
 		CarrinhoModel carrinhoModel = new CarrinhoModel();
 		
