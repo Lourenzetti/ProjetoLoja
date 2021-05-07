@@ -3,7 +3,14 @@ package br.com.senai.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.senai.controller.ProdutoController;
+import br.com.senai.controller.Controller;
+import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
+import br.com.senai.controller.carrinho.ListCarrinho;
+import br.com.senai.controller.cliente.AdicionarCliente;
+import br.com.senai.controller.produto.CadastraProduto;
+import br.com.senai.controller.produto.DeletarProduto;
+import br.com.senai.controller.produto.EditarProduto;
+import br.com.senai.controller.produto.ListarProduto;
 import br.com.senai.model.CarrinhoModel;
 import br.com.senai.model.ProdutoModel;
 
@@ -12,39 +19,49 @@ public class ProgramaPrincipal {
 		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
 		List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
 
-		ProdutoController produtoController = new ProdutoController();
-
+		Controller produtoController = new Controller();
+		ListCarrinho listCarrinho = new ListCarrinho();
+		ListarProduto listaProduto = new ListarProduto();
+		EditarProduto editaProduto = new EditarProduto();
+		DeletarProduto deletaProduto = new DeletarProduto();
+		AdicionaItemNoCarrinho adicionaItemNoCarrinho = new AdicionaItemNoCarrinho();
+		CadastraProduto cadastraProduto = new CadastraProduto();
+		AdicionarCliente adicionaCliente = new AdicionarCliente();
 		boolean sair = false;
 
-		String cliente = produtoController.definirCliente();
+		String cliente = adicionaCliente.definirCliente();
 		
 		do {
-			produtoController.menu(itensNoCarrinho);
+			produtoController.menu();
 			int opc = produtoController.opcao();
 
 			switch (opc) {
 			case 1:
-				produtos.add(produtoController.cadastrarProduto());
+				produtos.add(cadastraProduto.cadastrarProduto());
 				break;
+				
 			case 2:
-				produtoController.listarProdutos(produtos);
+				listaProduto.listarProdutos(produtos);
 				break;
+				
 			case 3:
-				produtoController.editarProduto(produtos);
+				editaProduto.editarProduto(produtos);
 				break;
+				
 			case 4:
-				produtoController.removerProduto(produtos);
+				deletaProduto.removerProduto(produtos);
 				break;
+				
 			case 5:
-				itensNoCarrinho.add(produtoController.cadastrarItemNoCarrinho(produtos));
+				itensNoCarrinho.add(adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos));
 				break;
 				
 			case 6:
-				produtoController.listarItensNoCarrinho(itensNoCarrinho);
+				listCarrinho.listarItensNoCarrinho(itensNoCarrinho);
 				break;
 				
 			case 7:
-				produtoController.gerarCupom(itensNoCarrinho, cliente);
+				listCarrinho.gerarCupom(itensNoCarrinho, cliente);
 				break;
 				
 			case 9:
