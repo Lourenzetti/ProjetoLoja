@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import br.com.senai.model.ProdutoModel;
 
-public class CadastraProduto {
+public class CadastrarProduto {
 
 	Scanner entrada = new Scanner(System.in);
 	ProdutoModel produtoModel;

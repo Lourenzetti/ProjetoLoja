@@ -23,7 +23,7 @@ public class AdicionaItemNoCarrinho {
 			return null;
 		}
 		
-		listaProduto.listarProdutos(produtos);
+		listaProduto.listarDados();
 		
 		System.out.println("--- ADICIONAR ITEM NO CARRINHO ---");
 		System.out.print("Informe o ID do produto: ");

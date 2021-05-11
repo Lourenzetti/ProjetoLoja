@@ -20,7 +20,7 @@ public class EditarProduto {
 			return null;
 		}
 		
-		listaProduto.listarProdutos(produtos);
+		listaProduto.listarDados();
 		
 		System.out.println("--- EDITAR DADOS DE PRODUTO ---");
 		System.out.print("Informe o ID do produto: ");
