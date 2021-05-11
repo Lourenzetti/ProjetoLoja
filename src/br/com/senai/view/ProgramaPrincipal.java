@@ -41,8 +41,7 @@ public class ProgramaPrincipal {
 				break;
 				
 			case 2:
-				//listaProduto.listarProdutos(produtos);
-				listaProduto.listarDados();
+				listaProduto.listarProdutos();
 				break;
 				
 			case 3:

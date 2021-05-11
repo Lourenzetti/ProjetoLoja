@@ -16,7 +16,7 @@ public class DeletarProduto {
 			return;
 		}
 		
-		listaProduto.listarDados();
+		listaProduto.listarProdutos();
 		
 		System.out.print("Informe o ID do produto a ser removido: ");
 		int idDoProduto = entrada.nextInt();

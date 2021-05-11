@@ -13,17 +13,16 @@ import br.com.dao.DataBaseConnection;
 public class ListarProduto {
 
 	private Connection connection;
-	private ResultSet resultSet;
 	
 	public ListarProduto() {
 		connection = DataBaseConnection.getInstance().getConnection();
-		this.resultSet = listarDados();
 	}
 	
-	public ResultSet listarDados() {
+	public ResultSet listarProdutos() {
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = connection.prepareStatement("SELECT * FROM produto");
+			String sql = "SELECT * FROM produto";
+			preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			System.out.println("\n----- PRODUTOS CADASTRADOS -----\n");
@@ -46,20 +45,4 @@ public class ListarProduto {
 		}
 	}
 	
-//	public List<ProdutoModel> listarProdutos(List<ProdutoModel> produtos) {
-//		System.out.println("\n----- PRODUTOS CADASTRADOS -----\n");
-//		System.out.printf("| %2s | %10s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
-//		
-//		for (int i = 0; i < produtos.size(); i++) {
-//			System.out.printf("| %2s | %10s | R$%6.2f | %4s | %9s |\n",
-//					i + 1,
-//					produtos.get(i).getNomeDoProduto(),
-//					produtos.get(i).getPrecoDoProduto(),
-//					produtos.get(i).getQuantidadeDeProduto(),
-//					produtos.get(i).getSaldoEmEstoque());
-//		}
-//		
-//		return produtos;
-//	}
-//	
 }
