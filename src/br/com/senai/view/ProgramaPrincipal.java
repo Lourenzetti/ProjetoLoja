@@ -7,7 +7,7 @@ import br.com.senai.controller.Controller;
 import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
 import br.com.senai.controller.carrinho.ListCarrinho;
 import br.com.senai.controller.cliente.AdicionarCliente;
-import br.com.senai.controller.produto.CadastraProduto;
+import br.com.senai.controller.produto.CadastrarProduto;
 import br.com.senai.controller.produto.DeletarProduto;
 import br.com.senai.controller.produto.EditarProduto;
 import br.com.senai.controller.produto.ListarProduto;
@@ -25,7 +25,7 @@ public class ProgramaPrincipal {
 		EditarProduto editaProduto = new EditarProduto();
 		DeletarProduto deletaProduto = new DeletarProduto();
 		AdicionaItemNoCarrinho adicionaItemNoCarrinho = new AdicionaItemNoCarrinho();
-		CadastraProduto cadastraProduto = new CadastraProduto();
+		CadastrarProduto cadastraProduto = new CadastrarProduto();
 		AdicionarCliente adicionaCliente = new AdicionarCliente();
 		boolean sair = false;
 
@@ -41,7 +41,8 @@ public class ProgramaPrincipal {
 				break;
 				
 			case 2:
-				listaProduto.listarProdutos(produtos);
+				//listaProduto.listarProdutos(produtos);
+				listaProduto.listarDados();
 				break;
 				
 			case 3:
