@@ -28,6 +28,12 @@ public class ListarProduto {
 			System.out.println("\n----- PRODUTOS CADASTRADOS -----\n");
 			System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
 			
+			if(!resultSet.next()) {
+				System.out.println("Não existem dados cadastrados.");
+				return null;
+			}
+			resultSet.previous();
+			
 			while(resultSet.next()) {
 				System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n",
 					resultSet.getInt("codigoDoProduto"),
