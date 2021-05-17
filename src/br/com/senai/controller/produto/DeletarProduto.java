@@ -1,33 +1,71 @@
 package br.com.senai.controller.produto;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Scanner;
-import br.com.senai.model.ProdutoModel;
+import br.com.dao.DataBaseConnection;
 
 public class DeletarProduto {
-	Scanner entrada = new Scanner(System.in);
-	ListarProduto listaProduto;
-	
-	public void removerProduto(List<ProdutoModel> produtos) {
+
+	private Connection connection;
+
+	public DeletarProduto() {
+		connection = DataBaseConnection.getInstance().getConnection();
+	}
+
+	private Scanner entrada = new Scanner(System.in);
+	private ListarProduto listaProduto;
+
+	public void removerProduto() {
+		PreparedStatement preparedStatement;
 		listaProduto = new ListarProduto();
 		System.out.println("--- REMOVER PRODUTO ---");
-		if(produtos.size() <= 0) {
-			System.out.println("Não possui produtos para serem removidos.");
-			return;
-		}
-		
+
 		listaProduto.listarProdutos();
-		
+
 		System.out.print("Informe o ID do produto a ser removido: ");
 		int idDoProduto = entrada.nextInt();
-		
-		if(idDoProduto >= produtos.size()) {
-			System.out.println("Este produto não foi cadastrado.");
+
+		try {
+			
+			if(!verificaSeExistemProdutos(idDoProduto)) {
+				return;
+			}
+			
+			String sql = "DELETE FROM produto WHERE codigoDoProduto = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, idDoProduto);
+			preparedStatement.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("\nErro!\nFalha ao deletar os dados. Contate o suporte.");
 			return;
 		}
-		
-		produtos.remove(idDoProduto - 1);
 	}
-	
-	
+
+	public boolean verificaSeExistemProdutos(int idDoProduto) {
+		PreparedStatement preparedStatement;
+		try {
+			
+			String sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, idDoProduto);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()) {
+				System.out.println("Este produto não existe.");
+				return false;
+			} else {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 }

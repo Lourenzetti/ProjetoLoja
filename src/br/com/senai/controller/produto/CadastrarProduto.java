@@ -3,26 +3,25 @@ package br.com.senai.controller.produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
-
 import br.com.dao.DataBaseConnection;
 import br.com.senai.model.ProdutoModel;
 
 public class CadastrarProduto {
 
-	Scanner entrada = new Scanner(System.in);
-	ProdutoModel produtoModel;
-	Connection connection;
+	private Scanner entrada = new Scanner(System.in);
+	private ProdutoModel produtoModel;
+	private Connection connection;
 	
 	public CadastrarProduto() {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 	
-	public ProdutoModel cadastrarProduto() {
+	public void cadastrarProduto() {
 		produtoModel = new ProdutoModel();
 
 		System.out.println("\n--- CADASTRAR ITENS ---\n");
 		System.out.print("Produto: ");
-		produtoModel.setNomeDoProduto(entrada.next());
+		produtoModel.setNomeDoProduto(entrada.nextLine());
 		System.out.print("Preço: ");
 		produtoModel.setPrecoDoProduto(entrada.nextDouble());
 		System.out.print("Quantidade:");
@@ -43,9 +42,9 @@ public class CadastrarProduto {
 			
 		} catch (Exception e) {
 			System.out.println("\nErro!\nFalha ao cadastrar os dados. Contate o suporte.");
+			return;
 		}
 		
-		return produtoModel;
 	}
 	
 }

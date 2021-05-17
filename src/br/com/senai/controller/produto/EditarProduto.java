@@ -18,7 +18,7 @@ public class EditarProduto {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 	
-	public ProdutoModel editarProduto(List<ProdutoModel> produtos) {
+	public ProdutoModel editarProduto() {
 		PreparedStatement preparedStatement;
 		
 		listaProduto = new ListarProduto();
@@ -26,6 +26,7 @@ public class EditarProduto {
 		int idDoProduto, indexDoCampo;
 		
 		if(listaProduto.listarProdutos().equals(null)) {
+			System.out.println("Não existem dados cadastrados.");
 			return null;
 		}
 		
@@ -99,6 +100,7 @@ public class EditarProduto {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("\nErro!\nFalha ao editar os dados. Contate o suporte.");
 			return;
 		}
 		
@@ -151,16 +153,6 @@ public class EditarProduto {
 			return null;
 		}
 		
-		return produto;
-	}
-	
-	public ProdutoModel atualizarQuantidadeEValorTotal(List<ProdutoModel> produtos, int quantidade, int idDoProduto) {
-		ProdutoModel produto = new ProdutoModel();
-		produto.setQuantidadeDeProduto(produtos.get(idDoProduto).getQuantidadeDeProduto() - quantidade);
-		produto.setSaldoEmEstoque(produtos.get(idDoProduto).getPrecoDoProduto() * produto.getQuantidadeDeProduto());
-		produto.setNomeDoProduto(produtos.get(idDoProduto).getNomeDoProduto());
-		produto.setPrecoDoProduto(produtos.get(idDoProduto).getPrecoDoProduto());
-		produtos.set(idDoProduto, produto);
 		return produto;
 	}
 	

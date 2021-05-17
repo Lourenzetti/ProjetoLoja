@@ -35,7 +35,7 @@ public class ListarProduto {
 			resultSet.previous();
 			
 			while(resultSet.next()) {
-				System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n",
+				System.out.printf("| %2s | %15s | %8s | %4s | %9.2f |\n",
 					resultSet.getInt("codigoDoProduto"),
 					resultSet.getString("nomeDoProduto"),
 					resultSet.getDouble("precoDoProduto"),

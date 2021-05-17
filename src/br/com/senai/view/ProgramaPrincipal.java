@@ -1,35 +1,33 @@
 package br.com.senai.view;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import br.com.senai.controller.Controller;
 import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
-import br.com.senai.controller.carrinho.ListCarrinho;
-import br.com.senai.controller.cliente.AdicionarCliente;
+import br.com.senai.controller.carrinho.ListarCarrinho;
+//import br.com.senai.controller.cliente.AdicionarCliente;
 import br.com.senai.controller.produto.CadastrarProduto;
 import br.com.senai.controller.produto.DeletarProduto;
 import br.com.senai.controller.produto.EditarProduto;
 import br.com.senai.controller.produto.ListarProduto;
-import br.com.senai.model.CarrinhoModel;
-import br.com.senai.model.ProdutoModel;
+//import br.com.senai.model.CarrinhoModel;
 
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
-		List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
-		List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
+		//List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
 
 		Controller produtoController = new Controller();
-		ListCarrinho listCarrinho = new ListCarrinho();
+		ListarCarrinho listaCarrinho = new ListarCarrinho();
 		ListarProduto listaProduto = new ListarProduto();
 		EditarProduto editaProduto = new EditarProduto();
 		DeletarProduto deletaProduto = new DeletarProduto();
 		AdicionaItemNoCarrinho adicionaItemNoCarrinho = new AdicionaItemNoCarrinho();
 		CadastrarProduto cadastraProduto = new CadastrarProduto();
-		AdicionarCliente adicionaCliente = new AdicionarCliente();
+		//AdicionarCliente adicionaCliente = new AdicionarCliente();
 		boolean sair = false;
 
-		String cliente = adicionaCliente.definirCliente();
+		//String cliente = adicionaCliente.definirCliente();
 		
 		do {
 			produtoController.menu();
@@ -37,7 +35,7 @@ public class ProgramaPrincipal {
 
 			switch (opc) {
 			case 1:
-				produtos.add(cadastraProduto.cadastrarProduto());
+				cadastraProduto.cadastrarProduto();
 				break;
 				
 			case 2:
@@ -45,23 +43,27 @@ public class ProgramaPrincipal {
 				break;
 				
 			case 3:
-				editaProduto.editarProduto(produtos);
+				editaProduto.editarProduto();
 				break;
 				
 			case 4:
-				deletaProduto.removerProduto(produtos);
+				deletaProduto.removerProduto();
 				break;
 				
 			case 5:
-				itensNoCarrinho.add(adicionaItemNoCarrinho.cadastrarItemNoCarrinho(produtos));
+				adicionaItemNoCarrinho.cadastrarItemNoCarrinho();
 				break;
 				
 			case 6:
-				listCarrinho.listarItensNoCarrinho(itensNoCarrinho);
+				listaCarrinho.listarCarrinho();
 				break;
 				
 			case 7:
-				listCarrinho.gerarCupom(itensNoCarrinho, cliente);
+				
+				break;
+				
+			case 8:
+				
 				break;
 				
 			case 9:

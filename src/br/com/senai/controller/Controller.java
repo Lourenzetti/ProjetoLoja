@@ -24,7 +24,8 @@ public class Controller {
 		System.out.println("4) Remover item");
 		System.out.println("5) Adicionar ao carrinho");  
 		System.out.println("6) Listar carrinho");
-		System.out.println("7) Gerar cupom fiscal");
+		System.out.println("7) Remover item do carrinho");
+		System.out.println("8) Gerar cupom fiscal");
 		System.out.println("9) Sair do sistema");
 		System.out.println("--------------------");
 	}
