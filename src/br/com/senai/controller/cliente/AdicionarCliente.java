@@ -10,6 +10,7 @@ public class AdicionarCliente {
 		
 		System.out.println("Informe o nome do Cliente: ");
 		String nome = entrada.nextLine();
+		
 		return nome;
 	}
 	

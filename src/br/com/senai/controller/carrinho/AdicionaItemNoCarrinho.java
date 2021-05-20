@@ -7,6 +7,7 @@ import java.util.Scanner;
 import br.com.dao.DataBaseConnection;
 import br.com.senai.controller.produto.ListarProduto;
 import br.com.senai.model.CarrinhoModel;
+import br.com.senai.model.ProdutoModel;
 
 public class AdicionaItemNoCarrinho {
 
@@ -18,8 +19,7 @@ public class AdicionaItemNoCarrinho {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 
-	@SuppressWarnings("resource")
-	public void cadastrarItemNoCarrinho() {
+	public void cadastrarItemNoCarrinho(String cliente) {
 		CarrinhoModel carrinhoModel = new CarrinhoModel();
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
@@ -31,6 +31,7 @@ public class AdicionaItemNoCarrinho {
 
 		try {
 			String sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
+			
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idDoProduto);
 
@@ -55,16 +56,18 @@ public class AdicionaItemNoCarrinho {
 		carrinhoModel.setSaldoEmEstoque(carrinhoModel.getQuantidadeDeProduto() * carrinhoModel.getPrecoDoProduto());
 
 		try {
-			String sql = "SELECT * FROM carrinho WHERE codigoDoProduto = ?";
+			String sql = "SELECT * FROM carrinho WHERE codigoDoProduto = ? and cliente = ?";
+			
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idDoProduto);
-
+			preparedStatement.setString(2, cliente);
+			
 			resultSet = preparedStatement.executeQuery();
 
 			if (!resultSet.next()) {
 
-				sql = "INSERT INTO carrinho (codigoDoProduto, nomeDoProduto, precoDoProduto, quantidadeDeProduto, saldoEmEstoque) "
-						+ "VALUES (?,?,?,?,?)";
+				sql = "INSERT INTO carrinho (codigoDoProduto, nomeDoProduto, precoDoProduto, quantidadeDeProduto, saldoEmEstoque, cliente) "
+						+ "VALUES (?,?,?,?,?,?)";
 				preparedStatement = connection.prepareStatement(sql);
 
 				preparedStatement.setInt(1, idDoProduto);
@@ -72,37 +75,86 @@ public class AdicionaItemNoCarrinho {
 				preparedStatement.setDouble(3, carrinhoModel.getPrecoDoProduto());
 				preparedStatement.setInt(4, carrinhoModel.getQuantidadeDeProduto());
 				preparedStatement.setDouble(5, carrinhoModel.getSaldoEmEstoque());
+				preparedStatement.setString(6, cliente);
 
 				preparedStatement.execute();
+				
+				ResultSet upEstoque;
+				PreparedStatement statEstoque;
+				
+				sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
+				statEstoque = connection.prepareStatement(sql);
+				statEstoque.setInt(1, idDoProduto);
+				
+				upEstoque = statEstoque.executeQuery();
+				upEstoque.next();
+				
+				ProdutoModel produto = new ProdutoModel();
+				
+				produto.setPrecoDoProduto(upEstoque.getDouble("precoDoProduto"));
+				produto.setQuantidadeDeProduto(upEstoque.getInt("quantidadeDeProduto") - carrinhoModel.getQuantidadeDeProduto());
+				produto.setSaldoEmEstoque(produto.getPrecoDoProduto() * produto.getQuantidadeDeProduto());
+				
+				sql = "UPDATE produto SET quantidadeDeProduto = ?, saldoEmEstoque = ? WHERE codigoDoProduto = ?";
+				statEstoque = connection.prepareStatement(sql);
 
-				sql = "UPDATE produto SET quantidadeDeProduto = ?, saldoEmEstoque = ? " + "WHERE codigoDoProduto = ?";
-				preparedStatement = connection.prepareStatement(sql);
-
-				preparedStatement.setInt(1,
-						resultSet.getInt("quantidadeDeProduto") - carrinhoModel.getQuantidadeDeProduto());
-				preparedStatement.setDouble(2,
-						resultSet.getDouble("precoDoProduto") * resultSet.getInt("quantidadeDeProduto"));
-				preparedStatement.setInt(3, idDoProduto);
-
-				preparedStatement.execute();
-
+				statEstoque.setInt(1,produto.getQuantidadeDeProduto());
+				statEstoque.setDouble(2, produto.getSaldoEmEstoque());
+				statEstoque.setInt(3, idDoProduto);
+				
+				statEstoque.execute();
+				
 			} else {
+				PreparedStatement updateEstoque;
+				ResultSet estoqueResult;
+				ResultSet carrResult;
+				
+				sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
+				updateEstoque = connection.prepareStatement(sql);
+				updateEstoque.setInt(1, idDoProduto);
+				estoqueResult = updateEstoque.executeQuery();
+				estoqueResult.next();
+				
+				ProdutoModel produto = new ProdutoModel();
+				
+				produto.setPrecoDoProduto(estoqueResult.getDouble("precoDoProduto"));
+				produto.setQuantidadeDeProduto(estoqueResult.getInt("quantidadeDeProduto") - carrinhoModel.getQuantidadeDeProduto());
+				produto.setSaldoEmEstoque(produto.getPrecoDoProduto() * produto.getQuantidadeDeProduto());
+									
+				sql = "UPDATE produto SET quantidadeDeProduto = ?, saldoEmEstoque = ? WHERE codigoDoProduto = ?";
+				updateEstoque = connection.prepareStatement(sql);
 
-				sql = "UPDATE carrinho SET quantidadeDeProduto = ?, saldoEmEstoque = ? " + "WHERE codigoDoProduto = ?";
-				preparedStatement = connection.prepareStatement(sql);
+				updateEstoque.setInt(1, produto.getQuantidadeDeProduto());
+				updateEstoque.setDouble(2, produto.getSaldoEmEstoque());
+				updateEstoque.setInt(3, idDoProduto);
 				
-				preparedStatement.setInt(1, resultSet.getInt("quantidadeDeProduto") + carrinhoModel.getQuantidadeDeProduto());
+				updateEstoque.execute();					
 				
-				preparedStatement.setDouble(2, resultSet.getDouble("precoDoProduto") * (resultSet.getInt("quantidadeDeProduto") + carrinhoModel.getQuantidadeDeProduto()));
+				sql = "SELECT * FROM carrinho WHERE codigoDoProduto = ? and cliente = ?";
+				updateEstoque = connection.prepareStatement(sql);
+				updateEstoque.setInt(1, idDoProduto);
+				updateEstoque.setString(2, cliente);
+				carrResult = updateEstoque.executeQuery();
+				carrResult.next();
 				
-				preparedStatement.setInt(3, idDoProduto);
+				carrinhoModel.setQuantidadeDeProduto(carrResult.getInt("quantidadeDeProduto") + carrinhoModel.getQuantidadeDeProduto());
+				carrinhoModel.setSaldoEmEstoque(carrinhoModel.getPrecoDoProduto() * carrinhoModel.getQuantidadeDeProduto());
 				
-				preparedStatement.execute();
+				sql = "UPDATE carrinho SET quantidadeDeProduto = ?, saldoEmEstoque = ? WHERE codigoDoProduto = ? and cliente = ?";
+				updateEstoque = connection.prepareStatement(sql);
+
+				updateEstoque.setInt(1, carrinhoModel.getQuantidadeDeProduto());
+				updateEstoque.setDouble(2, carrinhoModel.getSaldoEmEstoque());
+				updateEstoque.setInt(3, idDoProduto);
+				updateEstoque.setString(4, cliente);
+				
+				updateEstoque.execute();	
+
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("\nErro!\nFalha ao localizar produto. Contate o suporte.");
+			System.out.println("\nErro!\nFalha ao adicionar o produto. Contate o suporte.");
 			return;
 		}
 

@@ -1,21 +1,19 @@
 package br.com.senai.view;
 
-//import java.util.ArrayList;
-//import java.util.List;
-
 import br.com.senai.controller.Controller;
 import br.com.senai.controller.carrinho.AdicionaItemNoCarrinho;
+import br.com.senai.controller.carrinho.GerarCupomFiscal;
 import br.com.senai.controller.carrinho.ListarCarrinho;
-//import br.com.senai.controller.cliente.AdicionarCliente;
+import br.com.senai.controller.carrinho.RemoverItemDoCarrinho;
+import br.com.senai.controller.cliente.AdicionarCliente;
 import br.com.senai.controller.produto.CadastrarProduto;
 import br.com.senai.controller.produto.DeletarProduto;
 import br.com.senai.controller.produto.EditarProduto;
 import br.com.senai.controller.produto.ListarProduto;
-//import br.com.senai.model.CarrinhoModel;
 
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
-		//List<CarrinhoModel> itensNoCarrinho = new ArrayList<CarrinhoModel>();
+
 
 		Controller produtoController = new Controller();
 		ListarCarrinho listaCarrinho = new ListarCarrinho();
@@ -23,11 +21,13 @@ public class ProgramaPrincipal {
 		EditarProduto editaProduto = new EditarProduto();
 		DeletarProduto deletaProduto = new DeletarProduto();
 		AdicionaItemNoCarrinho adicionaItemNoCarrinho = new AdicionaItemNoCarrinho();
+		RemoverItemDoCarrinho removerItemDoCarrinho = new RemoverItemDoCarrinho();
 		CadastrarProduto cadastraProduto = new CadastrarProduto();
-		//AdicionarCliente adicionaCliente = new AdicionarCliente();
+		AdicionarCliente adicionaCliente = new AdicionarCliente();
+		GerarCupomFiscal cupom = new GerarCupomFiscal();
 		boolean sair = false;
 
-		//String cliente = adicionaCliente.definirCliente();
+		String cliente = adicionaCliente.definirCliente();
 		
 		do {
 			produtoController.menu();
@@ -51,19 +51,19 @@ public class ProgramaPrincipal {
 				break;
 				
 			case 5:
-				adicionaItemNoCarrinho.cadastrarItemNoCarrinho();
+				adicionaItemNoCarrinho.cadastrarItemNoCarrinho(cliente);
 				break;
 				
 			case 6:
-				listaCarrinho.listarCarrinho();
+				listaCarrinho.listarCarrinho(cliente);
 				break;
 				
 			case 7:
-				
+				removerItemDoCarrinho.removerItem(cliente);
 				break;
 				
 			case 8:
-				
+				cupom.gerarCupom(cliente);
 				break;
 				
 			case 9:

@@ -3,7 +3,6 @@ package br.com.senai.controller.carrinho;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import br.com.dao.DataBaseConnection;
 
 public class ListarCarrinho {
@@ -14,12 +13,13 @@ public class ListarCarrinho {
 		connection = DataBaseConnection.getInstance().getConnection();
 	}
 	
-	public void listarCarrinho() {
+	public void listarCarrinho(String cliente) {
 
 		PreparedStatement preparedStatement;
 		try {
-			String sql = "SELECT * FROM carrinho";
+			String sql = "SELECT * FROM carrinho WHERE cliente = ?";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, cliente);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			System.out.println("\n----- CARRINHO -----\n");

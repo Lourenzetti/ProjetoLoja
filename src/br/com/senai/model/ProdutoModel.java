@@ -2,13 +2,11 @@ package br.com.senai.model;
 
 public class ProdutoModel {
 
-	// Atributos
 	private String nomeDoProduto;
 	private double precoDoProduto;
 	private int quantidadeDeProduto;
 	private double saldoEmEstoque;
 
-	// CONSTRUCTORS
 	public ProdutoModel() {
 	}
 
@@ -20,7 +18,6 @@ public class ProdutoModel {
 		this.saldoEmEstoque = saldoEmEstoque;
 	}
 
-	// METODOS ACE/MOD
 	public String getNomeDoProduto() {
 		return nomeDoProduto;
 	}
