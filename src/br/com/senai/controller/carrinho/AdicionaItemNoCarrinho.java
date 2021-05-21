@@ -28,7 +28,8 @@ public class AdicionaItemNoCarrinho {
 		System.out.println("--- ADICIONAR ITEM NO CARRINHO ---");
 		System.out.print("Informe o ID do produto: ");
 		int idDoProduto = entrada.nextInt();
-
+		int quantEstoque;
+		
 		try {
 			String sql = "SELECT * FROM produto WHERE codigoDoProduto = ?";
 			
@@ -41,6 +42,7 @@ public class AdicionaItemNoCarrinho {
 				System.out.println("Este produto não existe.");
 				return;
 			} else {
+				quantEstoque = resultSet.getInt("quantidadeDeProduto");
 				carrinhoModel.setNomeDoProduto(resultSet.getString("nomeDoProduto"));
 				carrinhoModel.setPrecoDoProduto(resultSet.getDouble("precoDoProduto"));
 			}
@@ -64,6 +66,11 @@ public class AdicionaItemNoCarrinho {
 			
 			resultSet = preparedStatement.executeQuery();
 
+			if(quantEstoque < carrinhoModel.getQuantidadeDeProduto()) {
+				System.out.println("Quantidade inválida: Não há produtos suficientes no estoque!");
+				return;
+			}
+			
 			if (!resultSet.next()) {
 
 				sql = "INSERT INTO carrinho (codigoDoProduto, nomeDoProduto, precoDoProduto, quantidadeDeProduto, saldoEmEstoque, cliente) "

@@ -26,10 +26,17 @@ public class GerarCupomFiscal {
 				return;
 			}
 			
-			listaCarrinho.listarCarrinho(cliente);
-			System.out.println("Cliente: " + cliente);
+			String sql = "SELECT SUM(precoDoProduto) FROM carrinho";
+			preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			double total = resultSet.getDouble("SUM(precoDoProduto)");
 			
-			String sql = "DELETE FROM carrinho WHERE cliente = ?";
+			listaCarrinho.listarCarrinho(cliente);
+			System.out.println("|------------------------------------------------|--------------------|");
+			System.out.printf("| Cliente: | %-35s |Total: R$%-10.2f |\n", cliente, total);
+
+			sql = "DELETE FROM carrinho WHERE cliente = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, cliente);
 			preparedStatement.execute();

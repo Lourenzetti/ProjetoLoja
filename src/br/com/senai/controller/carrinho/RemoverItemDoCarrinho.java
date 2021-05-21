@@ -26,17 +26,27 @@ public class RemoverItemDoCarrinho {
 			System.out.println("--- REMOVER PRODUTO DO CARRINHO ---");
 
 			listaCarrinho.listarCarrinho(cliente);
+			
 
-			System.out.print("Informe o ID do produto a ser removido: ");
-			int idDoProduto = entrada.nextInt();
 
 			try {
+				
+				String sql = "SELECT * FROM carrinho WHERE cliente = ?";
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1, cliente);
+				ResultSet resultSet = preparedStatement.executeQuery();
+				if(!resultSet.next()) {
+					return;
+				}
+				
+				System.out.print("Informe o ID do produto a ser removido: ");
+				int idDoProduto = entrada.nextInt();
 				
 				if(!verificaSeExistemProdutos(idDoProduto, cliente)) {
 					return;
 				}
 				
-				String sql = "SELECT * from carrinho WHERE codigoDoProduto = ? and cliente = ?";
+				sql = "SELECT * from carrinho WHERE codigoDoProduto = ? and cliente = ?";
 				preparedStatement = connection.prepareStatement(sql);
 				preparedStatement.setInt(1, idDoProduto);
 				preparedStatement.setString(2, cliente);
@@ -56,7 +66,6 @@ public class RemoverItemDoCarrinho {
 				ResultSet prodset = estoqueStatement.executeQuery();
 				prodset.next();
 				
-				System.out.println(prodset.getDouble("precoDoProduto"));
 				produto.setPrecoDoProduto(prodset.getDouble("precoDoProduto"));
 				produto.setQuantidadeDeProduto(prodset.getInt("quantidadeDeProduto") + carrset.getInt("quantidadeDeProduto"));
 				produto.setSaldoEmEstoque(produto.getQuantidadeDeProduto() * produto.getPrecoDoProduto());

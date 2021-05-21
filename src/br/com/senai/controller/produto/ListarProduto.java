@@ -26,7 +26,7 @@ public class ListarProduto {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			System.out.println("\n----- PRODUTOS CADASTRADOS -----\n");
-			System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
+			System.out.printf("| %-2s | %-20s | %-10s | %-5s | %-18s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
 			
 			if(!resultSet.next()) {
 				System.out.println("Não existem dados cadastrados.");
@@ -35,7 +35,7 @@ public class ListarProduto {
 			resultSet.previous();
 			
 			while(resultSet.next()) {
-				System.out.printf("| %2s | %15s | %8s | %4s | %9.2f |\n",
+				System.out.printf("| %-2s | %-20s | %-10s | %-5s | %-18.2f |\n",
 					resultSet.getInt("codigoDoProduto"),
 					resultSet.getString("nomeDoProduto"),
 					resultSet.getDouble("precoDoProduto"),

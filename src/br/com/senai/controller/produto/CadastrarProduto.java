@@ -20,12 +20,19 @@ public class CadastrarProduto {
 		produtoModel = new ProdutoModel();
 
 		System.out.println("\n--- CADASTRAR ITENS ---\n");
+		
 		System.out.print("Produto: ");
-		produtoModel.setNomeDoProduto(entrada.nextLine());
+		produtoModel.setNomeDoProduto(
+				entrada.next());
+				entrada.nextLine();
 		System.out.print("Preço: ");
-		produtoModel.setPrecoDoProduto(entrada.nextDouble());
+		produtoModel.setPrecoDoProduto(
+				entrada.nextDouble());
+				entrada.nextLine();
 		System.out.print("Quantidade:");
-		produtoModel.setQuantidadeDeProduto(entrada.nextInt());
+		produtoModel.setQuantidadeDeProduto(
+				entrada.nextInt());
+				entrada.nextLine();
 		produtoModel.setSaldoEmEstoque(produtoModel.getQuantidadeDeProduto() * produtoModel.getPrecoDoProduto());
 		
 		try {

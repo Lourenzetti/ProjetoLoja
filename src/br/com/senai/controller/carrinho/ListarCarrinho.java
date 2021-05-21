@@ -23,7 +23,7 @@ public class ListarCarrinho {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			System.out.println("\n----- CARRINHO -----\n");
-			System.out.printf("| %2s | %15s | %8s | %4s | %9s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
+			System.out.printf("| %-2s | %-20s | %-10s | %-5s | %-18s |\n", "ID", "Produto", "Preço", "Qtd", "R$ Total");
 
 			if (!resultSet.next()) {
 				System.out.println("O carrinho está vazio.");
@@ -32,7 +32,7 @@ public class ListarCarrinho {
 			resultSet.previous();
 
 			while (resultSet.next()) {
-				System.out.printf("| %2s | %15s | %8s | %4s | %9.2f |\n", resultSet.getInt("codigoDoProduto"),
+				System.out.printf("| %-2s | %-20s | %-10s | %-5s | %-18.2f |\n", resultSet.getInt("codigoDoProduto"),
 						resultSet.getString("nomeDoProduto"), resultSet.getDouble("precoDoProduto"),
 						resultSet.getInt("quantidadeDeProduto"), resultSet.getDouble("saldoEmEstoque"));
 
