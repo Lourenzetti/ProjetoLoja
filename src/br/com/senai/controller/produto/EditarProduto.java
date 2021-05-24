@@ -3,7 +3,6 @@ package br.com.senai.controller.produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.Scanner;
 import br.com.dao.DataBaseConnection;
 import br.com.senai.model.ProdutoModel;
