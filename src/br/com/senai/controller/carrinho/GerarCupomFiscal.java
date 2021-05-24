@@ -34,7 +34,7 @@ public class GerarCupomFiscal {
 			
 			listaCarrinho.listarCarrinho(cliente);
 			System.out.println("|------------------------------------------------|--------------------|");
-			System.out.printf("| Cliente: | %-35s |Total: R$%-10.2f |\n", cliente, total);
+			System.out.printf("| Cliente: %-37s |Total: R$%-10.2f |\n", cliente, total);
 
 			sql = "DELETE FROM carrinho WHERE cliente = ?";
 			preparedStatement = connection.prepareStatement(sql);
